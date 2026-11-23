@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- Tinted at runtime (match green, no match amber, status chip). -->
+    <solid android:color="@color/camera_chip" />
+    <corners android:radius="999dp" />
+</shape>

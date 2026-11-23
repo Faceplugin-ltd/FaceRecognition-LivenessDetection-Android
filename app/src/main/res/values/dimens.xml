@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The captured still in the review dialog, and while typing. -->
+    <dimen name="capture_face_height">220dp</dimen>
+    <dimen name="capture_face_height_typing">96dp</dimen>
+</resources>

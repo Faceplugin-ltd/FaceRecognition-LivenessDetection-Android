@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fp_bg">
+
+    <ImageView
+        android:layout_width="240dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/company_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/fp_logo" />
+</FrameLayout>

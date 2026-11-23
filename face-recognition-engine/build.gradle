@@ -1,0 +1,43 @@
+// Publishes the prebuilt engine AAR (libs/facerecognitionsdk.aar) as com.faceplugin:face-recognition-sdk.
+// There is nothing to compile here: the AAR is built by the
+// Face-Recognition-LivenessDetection-Android-LX-SDK repository and copied in by its scripts/export.py.
+
+ext {
+    publishArtifactId = 'face-recognition-sdk'
+    publishDescription = 'FacePlugin face recognition and liveness engine for Android (arm64-v8a, armeabi-v7a).'
+    publishArtifactFile = rootProject.file('libs/facerecognitionsdk.aar')
+}
+
+tasks.register('checkEngineAar') {
+    doFirst {
+        if (!publishArtifactFile.exists()) {
+            throw new GradleException(
+                "Missing ${publishArtifactFile}.\n" +
+                "Build it from Face-Recognition-LivenessDetection-Android-LX-SDK:\n" +
+                "  python scripts/export.py --rebuild")
+        }
+    }
+}
+
+// A prebuilt binary has no sources to publish, but Maven Central expects both jars,
+// so these carry a pointer to the documentation instead.
+def placeholder = { String classifier, String text ->
+    def dir = layout.buildDirectory.dir("placeholder-$classifier").get().asFile
+    tasks.register("${classifier}Jar", Jar) {
+        archiveClassifier.set(classifier)
+        doFirst {
+            dir.mkdirs()
+            new File(dir, 'README.txt').text = text
+        }
+        from dir
+    }
+}
+
+placeholder('sources', 'The FacePlugin face recognition engine is distributed as a compiled library.\nThe open helper libraries are com.faceplugin:face-recognition-kit and :face-recognition-capture.\n')
+placeholder('javadoc', 'API documentation: https://doc.faceplugin.com\nThe helper libraries com.faceplugin:face-recognition-kit and :face-recognition-capture ship full javadoc.\n')
+
+apply from: "$rootDir/gradle/publish.gradle"
+
+afterEvaluate {
+    tasks.withType(PublishToMavenRepository).configureEach { dependsOn 'checkEngineAar' }
+}

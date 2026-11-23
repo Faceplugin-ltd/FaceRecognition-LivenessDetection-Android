@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Colours for the capture coach overlay, and the view ids the host layout must provide. -->
+<resources>
+    <color name="fp_capture_ring">#8C1D18</color>
+    <color name="fp_capture_ring_dim">#313033</color>
+    <color name="fp_capture_ring_active">#E6E1E5</color>
+    <color name="fp_capture_accent">#EADDFF</color>
+    <color name="fp_capture_scrim_top">#1C1B1F</color>
+    <color name="fp_capture_scrim">#000000</color>
+    <color name="fp_capture_dot">#492532</color>
+    <color name="fp_capture_progress">#2EE6A6</color>
+
+    <string name="fp_capture_title">Face Capture</string>
+</resources>

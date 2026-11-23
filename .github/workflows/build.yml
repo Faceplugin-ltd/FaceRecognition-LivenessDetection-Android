@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # The engine AAR is not in git. Without it only the sources are checked.
+      - name: Fetch the engine AAR
+        id: engine
+        env:
+          ENGINE_AAR_URL: ${{ secrets.ENGINE_AAR_URL }}
+        run: |
+          if [ -z "$ENGINE_AAR_URL" ]; then
+            echo "No ENGINE_AAR_URL secret — skipping the Gradle build." >&2
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          else
+            mkdir -p libs
+            curl -fsSL "$ENGINE_AAR_URL" -o libs/facerecognitionsdk.aar
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build
+        if: steps.engine.outputs.available == 'true'
+        run: ./gradlew build --no-daemon
+
+      - name: Staging publish (dry run)
+        if: steps.engine.outputs.available == 'true'
+        run: ./gradlew publishReleasePublicationToLocalStagingRepository --no-daemon

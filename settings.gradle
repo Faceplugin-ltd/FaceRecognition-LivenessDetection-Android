@@ -1,0 +1,25 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "Face-Recognition-LivenessDetection-Android"
+
+// Published libraries
+include ':face-recognition-kit'
+include ':face-recognition-capture'
+include ':face-recognition-engine'
+
+// Demo app
+include ':app'
