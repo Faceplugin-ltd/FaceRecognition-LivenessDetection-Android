@@ -7,7 +7,7 @@
 #### 🛟 Help Center - [Here](https://doc.faceplugin.com)
 #### 🐳 Docker Hub - [Here](https://hub.docker.com/r/faceplugin/face-recognition)
 
-# FacePlugin Face Recognition + Liveness Detection — Android (Fully On-Premise)
+# FacePlugin Face Recognition + 1:N Identification + Liveness Detection — Android (Fully On-Premise)
 
 Jump: [Quick start](#quick-start) · [Get the library](#get-the-library-facerecognitionsdkaar) · [Run the demo](#run-the-demo) · [SDK License](#sdk-license) · [Setup on your own app](#setup-on-your-own-app) · [About SDK](#about-sdk)
 
@@ -20,7 +20,7 @@ Jump: [Quick start](#quick-start) · [Get the library](#get-the-library-facereco
 
 ## Introduction
 
-FacePlugin **Face Recognition + Liveness Detection for Android** runs face recognition and passive liveness entirely on the device. Nothing is sent to a FacePlugin server, which is what banking, access control, and privacy-first identity apps need.
+FacePlugin **Face Recognition + Liveness Detection for Android** runs face recognition and passive liveness entirely on the device. Nothing is sent to a FacePlugin server, which is what banking, access control, and privacy-first identity apps need. Its headline capability is **1:N identification**: enroll your people once, then ask *who is this?* of a camera frame or a photo and get a ranked candidate list back — searched against a gallery that lives on the phone, so no face ever leaves it.
 
 This repository is the whole product: the **engine** (`libs/facerecognitionsdk.aar`), two **helper libraries** you add to your project, and a **demo app** built from those same libraries — so what you read here is what the demo runs.
 
@@ -28,11 +28,11 @@ This repository is the whole product: the **engine** (`libs/facerecognitionsdk.a
 
 | Feature | API |
 | ------- | --- |
+| **1:N identification** against the on-device gallery | `FaceGallery.identify` |
 | Face detection (bounding box, landmarks, pose, attributes) | `FaceDetector.detect` |
-| passive liveness (anti-spoofing) | `face.liveness` · `FaceLimits.isLive` |
+| Passive liveness (anti-spoofing) | `face.liveness` · `FaceLimits.isLive` |
 | Face image quality | `face.face_quality` |
 | Face template extraction and similarity | `FaceDetector.template` · `FaceDetector.similarity` |
-| **1:N identification** against the on-device gallery | `FaceGallery.identify` |
 | Enrollment with duplicate check | `FaceGallery.enroll` |
 | Guided camera capture (oval overlay, live coaching) | `FaceCaptureActivity` |
 | License and engine lifecycle | `FaceEngine.start` · `FaceEngine.licenseStatus` · `FaceEngine.machineCode` |
@@ -131,28 +131,35 @@ The demo is the `:app` module, with five tabs:
 
 ## SDK License
 
-Licenses are **offline** and bound to your `applicationId`.
+The demo runs as it is: a FacePlugin key for `com.faceplugin.facerecognitionsdk` is already in the code. Licenses are **offline** — once activated, nothing phones home — and each one is bound to your `applicationId`, so your own app needs its own key.
 
-The demo app already includes a valid key for `com.faceplugin.facerecognitionsdk`. You only need a new key when you use a different `applicationId`.
+### Set your SDK license
 
-### How to get a license
+| What | File | What to find |
+| ---- | ---- | ------------ |
+| The key itself | [`BuiltInLicense.kt`](app/src/main/java/com/faceplugin/facerecognitionsdk/shell/engine/BuiltInLicense.kt) | `const val KEY` |
+| Where it is used | [`ShellApp.kt`](app/src/main/java/com/faceplugin/facerecognitionsdk/shell/ShellApp.kt) | `FaceEngine.start(this, BuiltInLicense.KEY)` |
+| The id it is bound to | [`app/build.gradle`](app/build.gradle) | `applicationId` |
 
-The code below shows how the license is used:
+Find this, and put your key in place of the demo one:
 
-[https://github.com/Faceplugin-ltd/FaceRecognition-LivenessDetection-Android/blob/main/app/src/main/java/com/faceplugin/facerecognitionsdk/shell/engine/BuiltInLicense.kt#L4-L6](https://github.com/Faceplugin-ltd/FaceRecognition-LivenessDetection-Android/blob/main/app/src/main/java/com/faceplugin/facerecognitionsdk/shell/engine/BuiltInLicense.kt#L4-L6)
+```kotlin
+const val KEY =
+    "FP1.RlBMMQMAAQDJx5NBpyjuxrTSuz8MAgAA…"
+```
 
-[https://github.com/Faceplugin-ltd/FaceRecognition-LivenessDetection-Android/blob/main/app/src/main/java/com/faceplugin/facerecognitionsdk/shell/ShellApp.kt#L7-L12](https://github.com/Faceplugin-ltd/FaceRecognition-LivenessDetection-Android/blob/main/app/src/main/java/com/faceplugin/facerecognitionsdk/shell/ShellApp.kt#L7-L12)
+Rebuild and run. The Settings tab shows the license state, and the engine reports `NOT_ACTIVATED`, `LICENSE_INVALID` or `LICENSE_EXPIRED` when a key does not fit the app.
 
-Please [contact us](#contact) to get a license for **your own app**. Send us the `applicationId` you will ship, and `FaceEngine.machineCode(context)` if we ask for it.
+### How to get a key
+
+[Contact us](#contact) with the id you will ship. If we ask for a machine code, `FaceEngine.machineCode(context)` returns it. After activation, `FaceEngine.licenseStatus()` reports what the key unlocks.
 
 ### License capabilities (Recognition + Liveness)
-
-After activation, `FaceEngine.licenseStatus()` reports what the key unlocks. Settings shows the same summary.
 
 | Capability | Meaning |
 | ---------- | ------- |
 | **Recognition** | Detection, attributes, quality, templates, 1:1 similarity, and 1:N identification |
-| **Liveness** | passive anti-spoofing on camera frames and stills |
+| **Liveness** | Passive anti-spoofing on camera frames and stills |
 
 ## Setup on your own app
 
