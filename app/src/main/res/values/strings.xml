@@ -120,9 +120,9 @@
     <string name="no_images_found">No photos found in this folder.</string>
     <string name="matching">Matching</string>
     <string name="match_threshold">Match threshold</string>
-    <string name="threshold_help">Luxand FaceSDK standard identity verification is 0.80. A gallery face matches at or above this value. 0.70 is convenience, 0.90 is high security.</string>
+    <string name="threshold_help">The standard threshold for identity verification is 0.80. A gallery face matches at or above this value. 0.70 is convenience, 0.90 is high security.</string>
     <string name="liveness_check">Liveness check</string>
-    <string name="liveness_help">Reject photos of photos and screens before identifying. Luxand counts a face as live when its score is above 0.5.</string>
+    <string name="liveness_help">Reject photos of photos and screens before identifying. A face counts as live when its score is above 0.5.</string>
     <string name="status">Status</string>
     <string name="about">About</string>
     <string name="unavailable">Unavailable</string>

@@ -66,8 +66,8 @@ def sdkAar = rootProject.file('libs/facerecognitionsdk.aar')
 if (!sdkAar.exists()) {
     throw new GradleException(
         "Missing libs/facerecognitionsdk.aar.\n" +
-        "Build it from Face-Recognition-LivenessDetection-Android-LX-SDK:\n" +
-        "  python scripts/export.py"
+        "Download the engine from the FaceRecognition-LivenessDetection-Android release\n" +
+        "and place it at " + sdkAar
     )
 }
 

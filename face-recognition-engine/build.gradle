@@ -1,6 +1,5 @@
 // Publishes the prebuilt engine AAR (libs/facerecognitionsdk.aar) as com.faceplugin:face-recognition-sdk.
-// There is nothing to compile here: the AAR is built by the
-// Face-Recognition-LivenessDetection-Android-LX-SDK repository and copied in by its scripts/export.py.
+// There is nothing to compile here: the AAR is a prebuilt binary copied into libs/.
 
 ext {
     publishArtifactId = 'face-recognition-sdk'
@@ -13,8 +12,7 @@ tasks.register('checkEngineAar') {
         if (!publishArtifactFile.exists()) {
             throw new GradleException(
                 "Missing ${publishArtifactFile}.\n" +
-                "Build it from Face-Recognition-LivenessDetection-Android-LX-SDK:\n" +
-                "  python scripts/export.py --rebuild")
+                "Download the engine from the FaceRecognition-LivenessDetection-Android release.")
         }
     }
 }

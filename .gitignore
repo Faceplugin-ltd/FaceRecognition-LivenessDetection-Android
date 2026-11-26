@@ -52,3 +52,5 @@ build_libraries/
 
 # Library staging output
 build/staging-deploy/
+
+PUBLISHING.md

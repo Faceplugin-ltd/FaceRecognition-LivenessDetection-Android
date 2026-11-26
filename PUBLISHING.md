@@ -56,11 +56,7 @@ Each one ships the AAR, a sources jar and a Dokka javadoc jar, which is what Mav
    faceplugin.version=1.0.0
    ```
 
-2. Make sure `libs/facerecognitionsdk.aar` is the build you want to ship. From the SDK repository:
-
-   ```powershell
-   python scripts/export.py --rebuild
-   ```
+2. Make sure `libs/facerecognitionsdk.aar` is the build you want to ship.
 
 3. Check what would be published, without uploading anything:
 
