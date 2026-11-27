@@ -66,7 +66,8 @@ def sdkAar = rootProject.file('libs/facerecognitionsdk.aar')
 if (!sdkAar.exists()) {
     throw new GradleException(
         "Missing libs/facerecognitionsdk.aar.\n" +
-        "Download the engine from the FaceRecognition-LivenessDetection-Android release\n" +
+        "Download facerecognitionsdk.aar from\n" +
+        "https://github.com/Faceplugin-ltd/FaceRecognition-LivenessDetection-Android/releases/tag/latest\n" +
         "and place it at " + sdkAar
     )
 }

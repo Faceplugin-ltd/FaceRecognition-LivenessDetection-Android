@@ -1,6 +1,6 @@
 # FaceRecognitionSDK-Android-App (customer demo)
 # Push: app source, Gradle, README, screenshots.
-# Do not push: AAR / natives (Drive), secrets, build output, kit-only scripts.
+# Do not push: AAR / natives (Releases), secrets, build output, kit-only scripts.
 
 # --- IDE / local ---
 .gradle/
@@ -54,3 +54,11 @@ build_libraries/
 build/staging-deploy/
 
 PUBLISHING.md
+
+# Extra build / cache
+.kotlin/
+.externalNativeBuild/
+*.hprof
+*.log
+.venv/
+venv/
